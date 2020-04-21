@@ -1,8 +1,8 @@
 const { exec } = require('../db/mysql');
 const { getTime } = require('../tool/index');
 const getquestent = () => {
-    let sqlc = `select * from questentlist where status=1`;
-    let sqle = `select * from questentlist_e where status=1`;
+    let sqlc = `select * from questentlist where status=1 order by createtime desc`;
+    let sqle = `select * from questentlist_e where status=1 order by createtime desc`;
     return exec(sqlc, sqle);
 }
 const addquestent = (id, questent_c, answer_c, questent_e, answer_e) => {

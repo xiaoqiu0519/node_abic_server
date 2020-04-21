@@ -17,9 +17,8 @@ const gethouselist = (params) => {
             }
         }
     }
-    // sqlc += 'and' + sqlc + 'limit 0,5'
-    // sqle += 'and' + sqle + 'limit 0,5'
-    console.log(sqlc)
+    sqlc += 'order by createtime desc'
+    sqle += 'order by createtime desc'
     return exec(sqlc, sqle);
 }
 const gethousedetail = (id) => {
@@ -35,13 +34,13 @@ const addhouse = (id, username, telphone, email, title, city, size, type, tower,
     if (!id) {
         sqlc = `insert into houselist (username,telphone,email,title, city, size,createtime, type, tower, layout, faceto, balcony,
             parking, sellingprice, payment, notes, furniture, used, surrounding, imgArr, introduction ,status) values(
-            '${username}','${telphone}','${email}','${JSON.parse(title).name_c}', '${city}', ${size} ,'${time}', '${type}', '${tower}', '${layout}', 
+            '${username}','${telphone}','${email}','${JSON.parse(title).name_c}', '${city}', '${size}' ,'${time}', '${type}', '${tower}', '${layout}', 
             '${faceto}', '${balcony}','${parking}', '${sellingprice}', '${payment}', '${JSON.parse(notes).notes_c}', '${furniture}', '${used}', '${surrounding}', 
             '${imgArr}','${JSON.parse(introduction).introduction_c}','0')`;
 
         sqle = `insert into houselist_e (username,telphone,email,title, city, size,createtime, type, tower, layout, faceto, balcony,
             parking, sellingprice, payment, notes, furniture, used, surrounding, imgArr, introduction ,status) values(
-            '${username}','${telphone}','${email}','${JSON.parse(title).name_e}', '${city}', ${size} ,'${time}', '${type}', '${tower}', '${layout}', 
+            '${username}','${telphone}','${email}','${JSON.parse(title).name_e}', '${city}', '${size}' ,'${time}', '${type}', '${tower}', '${layout}', 
             '${faceto}', '${balcony}','${parking}', '${sellingprice}', '${payment}', '${JSON.parse(notes).notes_e}', '${furniture}', '${used}', '${surrounding}', 
             '${imgArr}','${JSON.parse(introduction).introduction_e}','0')`;
     } else {

@@ -7,8 +7,8 @@ const getblacklist = (status) => {
         sqlc += `and status='${status}' `;
         sqle += `and status='${status}' `;
     }
-    sqlc += `order by createtime`;
-    sqle += `order by createtime`;
+    sqlc += `order by createtime desc`;
+    sqle += `order by createtime desc`;
     return exec(sqlc, sqle);
 };
 // 一下为新增吐槽小站接口  已与更新接口合并
