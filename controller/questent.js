@@ -1,9 +1,17 @@
 const { exec } = require('../db/mysql');
 const { getTime } = require('../tool/index');
-const getquestent = () => {
-    let sqlc = `select * from questentlist where status=1 order by createtime desc`;
-    let sqle = `select * from questentlist_e where status=1 order by createtime desc`;
-    return exec(sqlc, sqle);
+const getquestent = (pageSize, pageNum) => {
+    let sqlc = `select * from questentlist where status=1 order by createtime desc `;
+    let sqle = `select * from questentlist_e where status=1 order by createtime desc `;
+    let sqlc1 = `select count(*) as total from questentlist `
+    let sqle1 = `select count(*) as total from questentlist_e `
+    if (pageNum && pageSize) {
+        sqlc += `limit ${(pageNum-1)*pageSize} , ${pageSize}`
+        sqle += `limit ${(pageNum-1)*pageSize} , ${pageSize}`
+    }
+    let d = exec(sqlc, sqle);
+    let t = exec(sqlc1, sqle1);
+    return Promise.all([d, t])
 }
 const addquestent = (id, questent_c, answer_c, questent_e, answer_e) => {
     let sqlc, sqle;

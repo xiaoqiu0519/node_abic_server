@@ -9,11 +9,12 @@ const {
 /* GET users listing. */
 /**获取吐槽小站列表 */
 router.post('/getlist', function(req, res, next) {
-    const { status } = req.body
-    getblacklist(status).then((listdata) => {
+    const { status, pageSize, pageNum } = req.body
+    getblacklist(status, pageSize, pageNum).then((result) => {
         res.json({
             error: '0000',
-            data: listdata
+            data: result[0],
+            total: result[1][0][0].total
         })
     })
 });
@@ -53,8 +54,7 @@ router.post('/udatestatus', (req, res, next) => {
 });
 /**吐槽小站内容编辑 */
 router.post('/updatecon', (req, res, next) => {
-    const { id, title_c, content_c, title_e, content_e, telphone } = req.body;
-    updatecon(id, title_c, content_c, title_e, content_e, telphone).then(() => {
+    updatecon(req, res).then(() => {
         res.json({
             error: '0000',
             mes: '修改成功',

@@ -7,11 +7,13 @@ const {
 } = require('../controller/questent');
 /* GET users listing. */
 /**获取问题列表 */
-router.get('/getlist', function(req, res, next) {
-    getquestent().then((listdata) => {
+router.post('/getlist', function(req, res, next) {
+    const { pageSize, pageNum } = req.body;
+    getquestent(pageSize, pageNum).then((result) => {
         res.json({
             error: '0000',
-            data: listdata
+            data: result[0],
+            total: result[1][0][0].total
         })
     })
 });
