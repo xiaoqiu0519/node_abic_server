@@ -2,7 +2,7 @@ const { exec } = require('../db/mysql');
 const { getTime } = require('../tool/index');
 const multer = require("multer");
 const fs = require('fs');
-const getblacklist = (status, pageSize, pageNum) => {
+const getblacklist = (status, id, pageSize, pageNum) => {
     let sqlc = `select * from blacklist where 1=1 `;
     let sqle = `select * from blacklist_e where 1=1 `;
     let sqlc1 = `select count(*) as total from blacklist where 1=1 `
@@ -12,6 +12,12 @@ const getblacklist = (status, pageSize, pageNum) => {
         sqle += `and status=${status} `;
         sqlc1 += `and status=${status} `;
         sqle1 += `and status=${status} `;
+    }
+    if (id) {
+        sqlc += `and id=${id} `;
+        sqle += `and id=${id} `;
+        sqlc1 += `and id=${id} `;
+        sqle1 += `and id=${id} `;
     }
     sqlc += `order by createtime desc `;
     sqle += `order by createtime desc `;
@@ -57,7 +63,6 @@ const updatecon = (req, res) => {
             } else {
                 var imgPath = [];
                 req.files.forEach(function(i) {
-                    console.log(i)
                     imgPath.push(`public/images/blacklisthub/${i.filename}`);
                 });
                 resolve(imgPath)

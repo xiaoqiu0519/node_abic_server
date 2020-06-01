@@ -2,7 +2,7 @@
     "apps": {
         "name": "abic",
         "script": "bin/www",
-        "watch": true,
+        "watch": false,
         "ignore_watch": [
             "node_modules",
             "logs"

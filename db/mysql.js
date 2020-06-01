@@ -4,25 +4,6 @@ const connection = mysql.createConnection(MYSQL_CONF);
 connection.connect();
 
 function exec(sqlc, sqle) {
-    // let sqlcfun = new Promise((resolve, reject) => {
-    //     connection.query(sqlc, (err, result) => {
-    //         if (err) {
-    //             reject(err);
-    //             return
-    //         }
-    //         resolve(result)
-    //     })
-    // });
-    // let sqlefun = new Promise((resolve, reject) => {
-    //     connection.query(sqle, (err, result) => {
-    //         if (err) {
-    //             reject(err);
-    //             return
-    //         }
-    //         resolve(result)
-    //     })
-    // });
-    // return Promise.all([sqlcfun, sqlefun])
     return new Promise((resolve, reject) => {
         connection.beginTransaction(function(err) {
             connection.query(sqlc, function(err, result1) {

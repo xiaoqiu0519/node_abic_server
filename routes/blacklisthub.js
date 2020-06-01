@@ -4,13 +4,16 @@ const {
     getblacklist,
     udatestatus,
     updatecon,
-    deleteblack
+    deleteblack,
 } = require('../controller/blacklisthub');
-/* GET users listing. */
-/**获取吐槽小站列表 */
+const {
+    deleteImg
+} = require('../tool/index')
+    /* GET users listing. */
+    /**获取吐槽小站列表 */
 router.post('/getlist', function(req, res, next) {
-    const { status, pageSize, pageNum } = req.body
-    getblacklist(status, pageSize, pageNum).then((result) => {
+    const { status, id, pageSize, pageNum } = req.body
+    getblacklist(status, id, pageSize, pageNum).then((result) => {
         res.json({
             error: '0000',
             data: result[0],
@@ -61,15 +64,28 @@ router.post('/updatecon', (req, res, next) => {
         })
     })
 });
+
 /**删除吐槽小站 */
 router.post('/deleteblack', (req, res, next) => {
     const { id } = req.body;
-    deleteblack(id).then(() => {
-        res.json({
-            error: '0000',
-            mes: "操作成功",
-        })
+    getblacklist(null, id).then((data) => {
+        if (data[0] && data[0][0].length != 0) {
+            deleteImg(data[0][0], 'imgs').then((result) => {
+                deleteblack(id).then(() => {
+                    res.json({
+                        error: '0000',
+                        mes: "操作成功",
+                    })
+                })
+            })
+        } else {
+            res.json({
+                error: '0001',
+                mes: "操作异常，请稍后再试",
+            })
+        }
     })
+
 });
 
 module.exports = router;

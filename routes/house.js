@@ -7,6 +7,9 @@ const {
     updatehouse,
     deletehouse,
 } = require('../controller/house');
+const {
+    deleteImg
+} = require('../tool/index')
 
 /* GET home page. */
 // 获取房源列表 1；房产买卖 2；房产租赁 3：特价房源
@@ -76,12 +79,24 @@ router.post('/updatehouse', (req, res, next) => {
 
 router.post('/deletehouse', (req, res, next) => {
     const { id } = req.body;
-    deletehouse(id).then(() => {
-        res.json({
-            error: '0000',
-            mes: '删除成功'
-        })
+    gethousedetail(id).then(data => {
+        if (data[0] && data[0].length != 0) {
+            deleteImg(data[0], 'imgArr').then(() => {
+                deletehouse(id).then((data) => {
+                    res.json({
+                        error: '0000',
+                        mes: '删除成功'
+                    })
+                })
+            })
+        } else {
+            res.json({
+                error: '0001',
+                mes: "操作异常，请稍后再试",
+            })
+        }
     })
+
 })
 
 module.exports = router;
