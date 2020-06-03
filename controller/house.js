@@ -54,6 +54,7 @@ const gethousedetail = (id) => {
 }
 const addhouse = (req, res) => {
     let time = getTime()
+    let timeId = new Date().getTime()
     let sqlc, sqle
     var id, username, telphone, email, title, city, size, type, tower, layout, faceto, balcony,
         parking, sellingprice, payment, notes, furniture, used, surrounding, imgArr, introduction
@@ -64,7 +65,7 @@ const addhouse = (req, res) => {
             cb(null, uploadDir);
         },
         filename: function(req, file, cb) {
-            cb(null, Math.random().toString(36).substr(-10) + time + "-" + file.originalname);
+            cb(null, time + "-" + file.originalname);
         },
     });
     const upload = multer({ storage: storage, }).array("images");
@@ -72,7 +73,7 @@ const addhouse = (req, res) => {
         upload(req, res, function(err) {
             id = req.body.id;
             username = req.body.username
-            telphone = req.body.telphone
+            telphone = Number(req.body.telphone)
             email = req.body.email
             title = req.body.title
             city = req.body.city
@@ -80,15 +81,15 @@ const addhouse = (req, res) => {
             size = req.body.size
             type = req.body.type
             tower = req.body.tower
-            layout = req.body.layout
-            faceto = req.body.faceto
-            balcony = req.body.balcony
-            parking = req.body.parking
+            layout = Number(req.body.layout)
+            faceto = Number(req.body.faceto)
+            balcony = Number(req.body.balcony)
+            parking = Number(req.body.parking)
             sellingprice = req.body.sellingprice
-            payment = req.body.payment
+            payment = Number(req.body.payment)
             notes = req.body.notes
             furniture = req.body.furniture
-            used = req.body.used
+            used = Number(req.body.used)
             surrounding = req.body.surrounding
             imgArr = req.body.imgArr
             introduction = req.body.introduction
@@ -106,15 +107,15 @@ const addhouse = (req, res) => {
     return imgArrPath.then((result) => {
         let imgArr = JSON.stringify(result);
         if (!id) {
-            sqlc = `insert into houselist (username,telphone,email,title, city, cityname ,size,createtime, type, tower, layout, faceto, balcony,
+            sqlc = `insert into houselist (id,username,telphone,email,title, city, cityname ,size,createtime, type, tower, layout, faceto, balcony,
                 parking, sellingprice, payment, notes, furniture, used, surrounding, imgArr, introduction ,status) values(
-                '${username}','${telphone}','${email}','${JSON.parse(title).name_c}', '${city}', '${JSON.parse(cityname).cityname_c}' ,'${size}' ,'${time}', '${type}', '${tower}', '${layout}', 
+                '${timeId}','${username}','${telphone}','${email}','${JSON.parse(title).name_c}', '${city}', '${JSON.parse(cityname).cityname_c}' ,'${size}' ,'${time}', '${type}', '${tower}', '${layout}', 
                 '${faceto}', '${balcony}','${parking}', '${sellingprice}', '${payment}', '${JSON.parse(notes).notes_c}', '${furniture}', '${used}', '${surrounding}', 
                 '${imgArr}','${JSON.parse(introduction).introduction_c}','0')`;
 
-            sqle = `insert into houselist_e (username,telphone,email,title, city, cityname ,size,createtime, type, tower, layout, faceto, balcony,
+            sqle = `insert into houselist_e (id,username,telphone,email,title, city, cityname ,size,createtime, type, tower, layout, faceto, balcony,
                 parking, sellingprice, payment, notes, furniture, used, surrounding, imgArr, introduction ,status) values(
-                '${username}','${telphone}','${email}','${JSON.parse(title).name_e}', '${city}', '${JSON.parse(cityname).cityname_e}', '${size}' ,'${time}', '${type}', '${tower}', '${layout}', 
+                '${timeId}','${username}','${telphone}','${email}','${JSON.parse(title).name_e}', '${city}', '${JSON.parse(cityname).cityname_e}', '${size}' ,'${time}', '${type}', '${tower}', '${layout}', 
                 '${faceto}', '${balcony}','${parking}', '${sellingprice}', '${payment}', '${JSON.parse(notes).notes_e}', '${furniture}', '${used}', '${surrounding}', 
                 '${imgArr}','${JSON.parse(introduction).introduction_e}','0')`;
         } else {

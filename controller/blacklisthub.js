@@ -36,6 +36,7 @@ const udatestatus = (id, status) => {
 };
 const updatecon = (req, res) => {
     let time = getTime()
+    let timeId = new Date().getTime()
     let sqlc, sqle
     var id, title_c, content_c, title_e, content_e, telphone, imgs
     const uploadDir = `./public/images/blacklisthub`;
@@ -76,17 +77,17 @@ const updatecon = (req, res) => {
                     createtime='${time}' `;
             sqle = `update blacklist_e set title='${title_e}',content='${content_e}',
                     createtime='${time}' `;
-            if (imgs !== '[]') {
+            if (imgStr !== '[]') {
                 sqlc += `,imgs='${imgStr}' `
                 sqle += `,imgs='${imgStr}' `
             }
             sqlc += `where id=${id}`
             sqle += `where id=${id}`
         } else {
-            sqlc = `insert into blacklist (title,content,createtime,telphone,status,imgs) 
-                        values('${title_c}','${content_c}','${time}','${telphone}',0,'${imgStr}')`;
-            sqle = `insert into blacklist_e (title,content,createtime,telphone,status,imgs) 
-                        values('${title_e}','${content_e}','${time}','${telphone}',0,'${imgStr}')`;
+            sqlc = `insert into blacklist (id,title,content,createtime,telphone,status,imgs) 
+                        values('${timeId}','${title_c}','${content_c}','${time}','${telphone}',0,'${imgStr}')`;
+            sqle = `insert into blacklist_e (id,title,content,createtime,telphone,status,imgs) 
+                        values('${timeId}','${title_e}','${content_e}','${time}','${telphone}',0,'${imgStr}')`;
         }
         return exec(sqlc, sqle)
     })

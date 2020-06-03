@@ -22,13 +22,12 @@ const addauthorize = (
     username, telphone1, email, title, used, tower, layout, size, faceto,
     balcony, parking, sellingprice, payment, notes, furniture, type
 ) => {
-    console.log(124)
     let time = new Date().getTime()
     let sql = `insert into authorize (
-        username,telphone,email,title,used,tower,layout,size,faceto,balcony,
+        id,username,telphone,email,title,used,tower,layout,size,faceto,balcony,
         parking,sellingprice,payment,notes,furniture,createtime,type,status
     ) values(
-        '${username}','${telphone1}','${email}','${title}','${used}','${tower}','${layout}','${size}','${faceto}',
+        '${time}','${username}','${telphone1}','${email}','${title}','${used}','${tower}','${layout}','${size}','${faceto}',
         '${balcony}','${parking}','${sellingprice}','${payment}','${notes}','${furniture}','${time}','${type}','0')`;
     return exec(sql)
 };

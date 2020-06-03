@@ -15,13 +15,14 @@ const getquestent = (pageSize, pageNum) => {
 }
 const addquestent = (id, questent_c, answer_c, questent_e, answer_e) => {
     let sqlc, sqle;
-    let time = getTime()
+    let time = getTime();
+    let timeid = new Date().getTime()
     if (id) {
         sqlc = `update questentlist set questent='${questent_c}',answer='${answer_c}' where id='${id}'`
         sqle = `update questentlist_e set questent='${questent_e}',answer='${answer_e}' where id='${id}'`
     } else {
-        sqlc = `insert into questentlist (questent,answer,status,createtime) values( '${questent_c}' , '${answer_c}'  , '1' , '${time}')`;
-        sqle = `insert into questentlist_e (questent,answer,status,createtime) values( '${questent_e}' , '${answer_e}' , '1' ,'${time}')`;
+        sqlc = `insert into questentlist (id,questent,answer,status,createtime) values('${timeid}', '${questent_c}' , '${answer_c}'  , '1' , '${time}')`;
+        sqle = `insert into questentlist_e (id,questent,answer,status,createtime) values('${timeid}', '${questent_e}' , '${answer_e}' , '1' ,'${time}')`;
     }
     return exec(sqlc, sqle)
 }
