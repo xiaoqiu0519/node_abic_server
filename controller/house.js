@@ -37,8 +37,8 @@ const gethouselist = (params, pageSize, pageNum) => {
             }
         }
     }
-    sqlc += `order by createtime desc `
-    sqle += `order by createtime desc `
+    sqlc += `order by id desc `
+    sqle += `order by id desc `
     if (pageNum && pageSize) {
         sqlc += `limit ${(pageNum-1)*pageSize} , ${pageSize}`
         sqle += `limit ${(pageNum-1)*pageSize} , ${pageSize}`
