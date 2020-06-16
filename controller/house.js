@@ -1,4 +1,5 @@
 const { exec } = require('../db/mysql');
+const mysql = require('mysql')
 const { getTime } = require('../tool/index');
 const multer = require("multer");
 const fs = require('fs');
@@ -69,6 +70,7 @@ const addhouse = (req, res) => {
         },
     });
     const upload = multer({ storage: storage, }).array("images");
+
     const imgArrPath = new Promise((resolve, reject) => {
         upload(req, res, function(err) {
             id = req.body.id;
@@ -109,24 +111,24 @@ const addhouse = (req, res) => {
         if (!id) {
             sqlc = `insert into houselist (id,username,telphone,email,title, city, cityname ,size,createtime, type, tower, layout, faceto, balcony,
                 parking, sellingprice, payment, notes, furniture, used, surrounding, imgArr, introduction ,status) values(
-                '${timeId}','${username}','${telphone}','${email}','${JSON.parse(title).name_c}', '${city}', '${JSON.parse(cityname).cityname_c}' ,'${size}' ,'${time}', '${type}', '${tower}', '${layout}', 
-                '${faceto}', '${balcony}','${parking}', '${sellingprice}', '${payment}', '${JSON.parse(notes).notes_c}', '${furniture}', '${used}', '${surrounding}', 
-                '${imgArr}','${JSON.parse(introduction).introduction_c}','0')`;
+                '${timeId}','${username}','${telphone}','${email}',${mysql.escape(JSON.parse(title).name_c)}, '${city}', '${JSON.parse(cityname).cityname_c}' ,'${size}' ,'${time}', '${type}', '${tower}', '${layout}', 
+                '${faceto}', '${balcony}','${parking}', '${sellingprice}', '${payment}', ${mysql.escape(JSON.parse(notes).notes_c)}, '${furniture}', '${used}', '${surrounding}', 
+                '${imgArr}',${mysql.escape(JSON.parse(introduction).introduction_c)},'0')`;
 
             sqle = `insert into houselist_e (id,username,telphone,email,title, city, cityname ,size,createtime, type, tower, layout, faceto, balcony,
                 parking, sellingprice, payment, notes, furniture, used, surrounding, imgArr, introduction ,status) values(
                 '${timeId}','${username}','${telphone}','${email}','${JSON.parse(title).name_e}', '${city}', '${JSON.parse(cityname).cityname_e}', '${size}' ,'${time}', '${type}', '${tower}', '${layout}', 
-                '${faceto}', '${balcony}','${parking}', '${sellingprice}', '${payment}', '${JSON.parse(notes).notes_e}', '${furniture}', '${used}', '${surrounding}', 
-                '${imgArr}','${JSON.parse(introduction).introduction_e}','0')`;
+                '${faceto}', '${balcony}','${parking}', '${sellingprice}', '${payment}', ${mysql.escape(JSON.parse(notes).notes_e)}, '${furniture}', '${used}', '${surrounding}', 
+                '${imgArr}',${mysql.escape(JSON.parse(introduction).introduction_e)},'0')`;
         } else {
-            sqlc = `update houselist set username='${username}',telphone='${telphone}',email='${email}',title='${JSON.parse(title).name_c}',city='${city}', cityname='${JSON.parse(cityname).cityname_c}',
+            sqlc = `update houselist set username='${username}',telphone='${telphone}',email='${email}',title=${mysql.escape(JSON.parse(title).name_c)},city='${city}', cityname='${JSON.parse(cityname).cityname_c}',
                 size='${size}',createtime='${time}',type='${type}',tower='${tower}',layout='${layout}',faceto='${faceto}',balcony='${balcony}',parking='${parking}',
-                sellingprice='${sellingprice}',payment='${payment}',notes='${JSON.parse(notes).notes_c}',furniture='${furniture}',used='${used}',surrounding='${surrounding}',
-                introduction='${JSON.parse(introduction).introduction_c}' `
+                sellingprice='${sellingprice}',payment='${payment}',notes=${mysql.escape(JSON.parse(notes).notes_c)},furniture='${furniture}',used='${used}',surrounding='${surrounding}',
+                introduction=${mysql.escape(JSON.parse(introduction).introduction_c)} `
             sqle = `update houselist_e set username='${username}',telphone='${telphone}',email='${email}',title='${JSON.parse(title).name_e}',city='${city}',cityname='${JSON.parse(cityname).cityname_e}',
                 size='${size}',createtime='${time}',type='${type}',tower='${tower}',layout='${layout}',faceto='${faceto}',balcony='${balcony}',parking='${parking}',
-                sellingprice='${sellingprice}',payment='${payment}',notes='${JSON.parse(notes).notes_e}',furniture='${furniture}',used='${used}',surrounding='${surrounding}',
-                introduction='${JSON.parse(introduction).introduction_e}' `
+                sellingprice='${sellingprice}',payment='${payment}',notes=${mysql.escape(JSON.parse(notes).notes_e)},furniture='${furniture}',used='${used}',surrounding='${surrounding}',
+                introduction=${mysql.escape(JSON.parse(introduction).introduction_e)} `
             if (imgArr !== '[]') {
                 sqlc += `,imgArr='${imgArr}' `
                 sqle += `,imgArr='${imgArr}' `

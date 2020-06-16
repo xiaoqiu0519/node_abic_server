@@ -8,6 +8,8 @@ const questentRouter = require('./routes/questent');
 const blacklistRouter = require('./routes/blacklisthub');
 const authorizeRouter = require('./routes/authorize');
 const others = require('./routes/others');
+const advisory = require('./routes/advisory');
+const formidable = require('express-formidable') // 引入
 
 var app = express();
 
@@ -24,6 +26,7 @@ app.use('/api/questent', questentRouter);
 app.use('/api/black', blacklistRouter);
 app.use('/api/authorize', authorizeRouter);
 app.use('/api/others', others)
+app.use('/api/advisory',advisory)
 
 
 
