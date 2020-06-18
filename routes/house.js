@@ -68,8 +68,8 @@ router.post('/addhouse', (req, res, next) => {
 //发布房源
 
 router.post('/updatehouse', (req, res, next) => {
-    const { id, status = null, type = null } = req.body;
-    updatehouse(id, status, type).then(() => {
+    const { id, status = null, type = null ,isnew} = req.body;
+    updatehouse(id, status, type ,isnew).then(() => {
         res.json({
             error: '0000',
             mes: '修改成功'

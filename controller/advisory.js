@@ -44,7 +44,7 @@ const deleteadvisory = (id)=>{
   return exec(sqlc, sqle);
 }
 /* 添加资讯*/
-const addadvisory = (fieldsArr,title) =>{
+const addadvisory = (fieldsArr,title,type) =>{
   let content_c = []
   let content_e = []
   fieldsArr.map((ele)=>{
@@ -74,10 +74,10 @@ const addadvisory = (fieldsArr,title) =>{
   })
   let timeId = new Date().getTime()
   let time = getTime()
-  let sqlc = `insert into advisory_c (id,title,content,createtime,status) 
-    values('${timeId}',${mysql.escape(JSON.parse(title).title_c)},${mysql.escape(JSON.stringify(content_c))},'${time}',0)`
-  let sqle = `insert into advisory_e (id,title,content,createtime,status) 
-    values('${timeId}',${mysql.escape(JSON.parse(title).title_e)},${mysql.escape(JSON.stringify(content_e))},'${time}',0)`
+  let sqlc = `insert into advisory_c (id,title,content,createtime,status,type) 
+    values('${timeId}','${(JSON.parse(title).title_c)}',${mysql.escape(JSON.stringify(content_c))},'${time}',0,'${type}')`
+  let sqle = `insert into advisory_e (id,title,content,createtime,status,type) 
+    values('${timeId}','${(JSON.parse(title).title_e)}',${mysql.escape(JSON.stringify(content_e))},'${time}',0,'${type}')`
   return exec(sqlc, sqle)
 }
 module.exports = {

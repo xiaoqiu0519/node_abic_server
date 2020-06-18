@@ -110,16 +110,16 @@ const addhouse = (req, res) => {
         let imgArr = JSON.stringify(result);
         if (!id) {
             sqlc = `insert into houselist (id,username,telphone,email,title, city, cityname ,size,createtime, type, tower, layout, faceto, balcony,
-                parking, sellingprice, payment, notes, furniture, used, surrounding, imgArr, introduction ,status) values(
+                parking, sellingprice, payment, notes, furniture, used, surrounding, imgArr, introduction ,status,new) values(
                 '${timeId}','${username}','${telphone}','${email}',${mysql.escape(JSON.parse(title).name_c)}, '${city}', '${JSON.parse(cityname).cityname_c}' ,'${size}' ,'${time}', '${type}', '${tower}', '${layout}', 
                 '${faceto}', '${balcony}','${parking}', '${sellingprice}', '${payment}', ${mysql.escape(JSON.parse(notes).notes_c)}, '${furniture}', '${used}', '${surrounding}', 
-                '${imgArr}',${mysql.escape(JSON.parse(introduction).introduction_c)},'0')`;
+                '${imgArr}',${mysql.escape(JSON.parse(introduction).introduction_c)},'0','1')`;
 
             sqle = `insert into houselist_e (id,username,telphone,email,title, city, cityname ,size,createtime, type, tower, layout, faceto, balcony,
-                parking, sellingprice, payment, notes, furniture, used, surrounding, imgArr, introduction ,status) values(
+                parking, sellingprice, payment, notes, furniture, used, surrounding, imgArr, introduction ,status,new) values(
                 '${timeId}','${username}','${telphone}','${email}','${JSON.parse(title).name_e}', '${city}', '${JSON.parse(cityname).cityname_e}', '${size}' ,'${time}', '${type}', '${tower}', '${layout}', 
                 '${faceto}', '${balcony}','${parking}', '${sellingprice}', '${payment}', ${mysql.escape(JSON.parse(notes).notes_e)}, '${furniture}', '${used}', '${surrounding}', 
-                '${imgArr}',${mysql.escape(JSON.parse(introduction).introduction_e)},'0')`;
+                '${imgArr}',${mysql.escape(JSON.parse(introduction).introduction_e)},'0','1')`;
         } else {
             sqlc = `update houselist set username='${username}',telphone='${telphone}',email='${email}',title=${mysql.escape(JSON.parse(title).name_c)},city='${city}', cityname='${JSON.parse(cityname).cityname_c}',
                 size='${size}',createtime='${time}',type='${type}',tower='${tower}',layout='${layout}',faceto='${faceto}',balcony='${balcony}',parking='${parking}',
@@ -140,7 +140,7 @@ const addhouse = (req, res) => {
     })
 
 }
-const updatehouse = (id, status, type) => {
+const updatehouse = (id, status, type , isnew) => {
     let sqlc, sqle;
     if (status == 0 || status) {
         sqlc = `update houselist set status='${status}' where id='${id}'`;
@@ -150,6 +150,12 @@ const updatehouse = (id, status, type) => {
         sqlc = `update houselist set type='${type}' where id='${id}'`;
         sqle = `update houselist_e set type='${type}' where id='${id}'`;
     }
+    if (isnew == 0 || isnew) {
+        sqlc = `update houselist set isnew='${isnew}' where id='${id}'`;
+        sqle = `update houselist_e set isnew='${isnew}' where id='${id}'`;
+    }
+    console.log(isnew)
+    console.log(sqlc)
     return exec(sqlc, sqle)
 }
 const deletehouse = (id) => {

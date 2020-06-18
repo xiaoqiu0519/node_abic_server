@@ -32,5 +32,4 @@ function exec(sqlc, sqle) {
 
 module.exports = {
     exec,
-    espace:mysql.escape
 }

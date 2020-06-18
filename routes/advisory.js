@@ -96,7 +96,7 @@ router.post('/addadvisory', (req, res, next) => {
       promistArr.push(promistobj[key])
     }
     Promise.all(promistArr).then((result)=>{
-      addadvisory(fieldsArr,fields.title).then(() => {
+      addadvisory(fieldsArr,fields.title,fields.type).then(() => {
         res.json({
             error: '0000',
             data: '操作成功'
