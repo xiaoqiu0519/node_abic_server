@@ -22,17 +22,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
-    resave: false, 
+    resave: true, 
     saveUninitialized: true,
     secret:'aF,.j)wBhq+E9n#aHHZ91Ba!VaoMfC',
     cookie:{
         path:'/',
         httpOnly:true,
-        maxAge:12*60*60*1000
+        maxAge:1*60*60*1000
     }
 }))
 app.use('/api',(req,res,next)=>{
-    if(req.url !== '/user/login'){
+    // console.log(req.headers.appid)
+    let appid = req.headers.appid || ''
+    if(req.url !== '/user/login' && appid != 'abic_h5'){
         if(!req.session || !req.session.username){
             res.json({
                 error:'999999',
