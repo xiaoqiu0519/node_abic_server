@@ -80,12 +80,13 @@ router.post('/addadvisory', (req, res, next) => {
   form.maxFieldsSize = 2000 * 1024 * 1024;
   form.parse(req, function(err, fields, files) {
     let time = getTime()
+    let timeId  = new Date().getTime()
     let fieldsArr = JSON.parse(fields.content)
     let promistobj = {}
     let promistArr = []
     for (const key in files) {
       promistobj[key] = new Promise((resolve,reject)=>{
-        let newpath =  uploadDir + time + '-' + files[key].name;
+        let newpath =  uploadDir + time + '-' + timeId + '-'+ files[key].name;
         let num =  Number(key.replace('images',''))
         fieldsArr[num-1].img = newpath
         fs.rename(files[key].path,newpath,function(err){

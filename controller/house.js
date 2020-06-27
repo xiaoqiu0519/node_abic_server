@@ -66,7 +66,7 @@ const addhouse = (req, res) => {
             cb(null, uploadDir);
         },
         filename: function(req, file, cb) {
-            cb(null, time + "-" + file.originalname);
+            cb(null, time + "-" + timeId + '-' + file.originalname);
         },
     });
     const upload = multer({ storage: storage, }).array("images");

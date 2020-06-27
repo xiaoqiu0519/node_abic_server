@@ -5,7 +5,7 @@ const { login} = require('../controller/user');
 router.post('/login', (req, res, next) => {
   const { username,password } = req.body
   login(username,password).then((result) => {
-    console.log(result[0][0])
+    // console.log(result[0][0])
     if(result[0][0]){
       req.session.username = result[0][0].username
       res.json({
