@@ -28,7 +28,7 @@ app.use(session({
     cookie:{
         path:'/',
         httpOnly:true,
-        maxAge:1*60*60*1000
+        maxAge:12*60*60*1000
     }
 }))
 app.use('/api',(req,res,next)=>{

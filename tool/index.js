@@ -5,7 +5,7 @@ let getTime = () => {
     let yy = time.getFullYear();
     let mm = time.getMonth() + 1;
     let dd = time.getDate();
-    return yy + '-' + (mm > 10 ? mm : '0' + mm) + '-' + (dd > 10 ? dd : '0' + dd)
+    return yy + '-' + (mm > 9 ? mm : '0' + mm) + '-' + (dd > 9 ? dd : '0' + dd)
 }
 
 const deleteImg = (argument, type) => {

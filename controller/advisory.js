@@ -75,9 +75,9 @@ const addadvisory = (fieldsArr,title,type) =>{
   let timeId = new Date().getTime()
   let time = getTime()
   let sqlc = `insert into advisory_c (id,title,content,createtime,status,type) 
-    values('${timeId}','${(JSON.parse(title).title_c)}',${mysql.escape(JSON.stringify(content_c))},'${time}',0,'${type}')`
+    values('${timeId}',${mysql.escape(JSON.parse(title).title_c)},${mysql.escape(JSON.stringify(content_c))},'${time}',0,'${type}')`
   let sqle = `insert into advisory_e (id,title,content,createtime,status,type) 
-    values('${timeId}','${(JSON.parse(title).title_e)}',${mysql.escape(JSON.stringify(content_e))},'${time}',0,'${type}')`
+    values('${timeId}',${mysql.escape(JSON.parse(title).title_e)},${mysql.escape(JSON.stringify(content_e))},'${time}',0,'${type}')`
   return exec(sqlc, sqle)
 }
 module.exports = {
