@@ -1,6 +1,4 @@
 const { exec } = require('../db/mysql');
-
-
 /**获取在线授权列表 */
 
 const getauthorize = (status) => {

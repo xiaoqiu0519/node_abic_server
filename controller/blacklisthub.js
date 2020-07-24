@@ -1,5 +1,6 @@
 const { exec } = require('../db/mysql');
 const { getTime } = require('../tool/index');
+const mysql = require('mysql')
 const multer = require("multer");
 const fs = require('fs');
 const getblacklist = (status, id, pageSize, pageNum) => {
@@ -73,9 +74,9 @@ const updatecon = (req, res) => {
     return imgArrPath.then((result) => {
         let imgStr = JSON.stringify(result);
         if (id) {
-            sqlc = `update blacklist set title='${title_c}',content='${content_c}',
+            sqlc = `update blacklist set title=${mysql.escape(title_c)},content=${mysql.escape(content_c)},
                     createtime='${time}' `;
-            sqle = `update blacklist_e set title='${title_e}',content='${content_e}',
+            sqle = `update blacklist_e set title=${mysql.escape(title_e)},content=${mysql.escape(content_e)},
                     createtime='${time}' `;
             if (imgStr !== '[]') {
                 sqlc += `,imgs='${imgStr}' `
@@ -85,9 +86,9 @@ const updatecon = (req, res) => {
             sqle += `where id=${id}`
         } else {
             sqlc = `insert into blacklist (id,title,content,createtime,telphone,status,imgs) 
-                        values('${timeId}','${title_c}','${content_c}','${time}','${telphone}',0,'${imgStr}')`;
+                        values('${timeId}',${mysql.escape(title_c)},${mysql.escape(content_c)},'${time}','${telphone}',0,'${imgStr}')`;
             sqle = `insert into blacklist_e (id,title,content,createtime,telphone,status,imgs) 
-                        values('${timeId}','${title_e}','${content_e}','${time}','${telphone}',0,'${imgStr}')`;
+                        values('${timeId}',${mysql.escape(title_e)},${mysql.escape(content_e)},'${time}','${telphone}',0,'${imgStr}')`;
         }
         return exec(sqlc, sqle)
     })
