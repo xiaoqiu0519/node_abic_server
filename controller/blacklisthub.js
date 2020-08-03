@@ -35,6 +35,11 @@ const udatestatus = (id, status) => {
     let sqle = `update blacklist_e set status='${status}' where id='${id}'`;
     return exec(sqlc, sqle)
 };
+const udatetop = (id, top) => {
+    let sqlc = `update blacklist set top='${top}' where id='${id}'`;
+    let sqle = `update blacklist_e set top='${top}' where id='${id}'`;
+    return exec(sqlc, sqle)
+};
 const updatecon = (req, res) => {
     let time = getTime()
     let timeId = new Date().getTime()
@@ -103,5 +108,6 @@ module.exports = {
     getblacklist,
     udatestatus,
     updatecon,
+    udatetop,
     deleteblack
 };

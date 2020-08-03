@@ -4,6 +4,7 @@ const {
     getblacklist,
     udatestatus,
     updatecon,
+    udatetop,
     deleteblack,
 } = require('../controller/blacklisthub');
 const {
@@ -49,6 +50,22 @@ router.post('/udatestatus', (req, res, next) => {
         return;
     }
     udatestatus(id, status).then(() => {
+        res.json({
+            error: '0000',
+            mes: '修改成功',
+        })
+    })
+});
+router.post('/udatetop', (req, res, next) => {
+    const { id, top } = req.body;
+    if (!id) {
+        res.json({
+            error: 'GW_10000',
+            mes: '参数不能为空'
+        })
+        return;
+    }
+    udatetop(id, top).then(() => {
         res.json({
             error: '0000',
             mes: '修改成功',
